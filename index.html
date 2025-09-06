@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <style>
+        body {
+            background-color: black;
+            font-weight: bold;
+            color: white;
+        }
+
+        #h1 {
+            font-weight: normal;
+            color: rgb(255, 255, 255);
+            font-size: 60px;
+            text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.8);
+            font-family: fantasy;
+        } 
+
+        #botImg {
+            position: absolute;
+            top:10%;
+            right: 45%;
+        }
+
+        #playerD {
+            position: absolute;
+            bottom: 10%;
+            right: 45%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center; 
+        }
+
+        #playerD p {
+            font-size: 30px;
+            margin-right: 5%;
+            font-weight: bold;
+        }
+
+        #schere {
+            height: 100px;
+            width: 100px;
+        }
+
+        #rock {
+            height: 100px;
+            width: 100px;
+        }
+
+        #papier {
+            height: 100px;
+            width: 100px;
+        }
+
+        #schereDiv {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #rockDiv {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #paperDiv {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #inventar {
+            display: flex;
+            justify-content: center;
+            gap: 5%; 
+            align-items: center;
+            flex-direction: row;
+            position: absolute;
+            bottom: 10%;
+            right: 10%; 
+        }
+
+
+        #logo{
+            position: absolute;
+            bottom: 0%;
+            right: 0%;
+            height: 80px;
+            width: 80px; 
+            border-radius: 48%;
+            border: solid 3px black;
+            margin: 10px;
+        }
+
+        #pointsDiv {
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            border-radius: 15px;
+            width: 210px;
+            font-size: 30px;
+            font-weight: bold;
+            padding: 10px;
+            box-shadow: 
+            0 0 0 8px rgb(73, 73, 73), /* Äußere Border */
+            0 0 0 16px white, /* Mittlere Border */
+            0 0 0 24px rgb(73, 73, 73); /* Innere Border */
+        }
+    </style>
+</head>
+<body>
+    <h1 id="h1">Schere, Stein, Papier</h1>
+
+    <div id="pointsDiv">
+        <p id="botPunkte">AI-Punkte:</p>
+        <p id="punkte">Punkte:</p>
+    </div>
+
+    
+
+    <img id="botImg" src="D:/MYcode/img/rock.png">
+    <div id="playerD">
+        <p id="ich">Du</p>
+        <img id="player" src="D:/MYcode/img/rock.png">
+        
+    </div>
+
+    <div id="inventar">
+        <div id="schereDiv">
+            <img id="schere" src="https://imgur.com/orQ3LJI.png" onclick="neuesImg('schereImg'), bot(), testen()">
+            <h2 id="s1">1</h2>
+        </div>
+
+        <div id="rockDiv">
+            <img id="rock" src="https://imgur.com/phBsB3m.png" onclick="neuesImg('rockImg'), bot(), testen()">
+            <h2 id="r1">2</h2>
+        </div>
+
+        <div id="paperDiv">
+            <img id="papier" src="https://imgur.com/vzz5qgv.png" onclick='neuesImg("paperImg"), bot(), testen()'>
+            <h2 id="p1">3</h2>
+        </div>
+    </div>
+    <img src="https://imgur.com/UmqfbFZ.jpg" id="logo">
+
+    <script>
+
+        let myPointsA = document.getElementById('punkte');
+        myPointsA.textContent = 'Punkte:   ';
+        let botPointsA = document.getElementById('botPunkte');
+        botPointsA.textContent = 'AI-Punkte:   ';
+
+        let myImg = document.getElementById('player');
+        let myP = '0';
+        let botP = '0';
+        let pfad1;
+
+        function neuesImg(pfad) {
+            if (pfad === "paperImg") {
+                pfad1 = "https://imgur.com/vzz5qgv.png";
+            } else if (pfad === "rockImg") {
+                pfad1 = "https://imgur.com/phBsB3m.png";
+            } else if (pfad === "schereImg") {
+                pfad1 = "https://imgur.com/orQ3LJI.png";
+            }
+            myImg.src = pfad1;
+        }
+		
+        let botImg = document.getElementById('botImg');
+
+		function bot() {
+            let bilder = ['https://imgur.com/orQ3LJI.png', 'https://imgur.com/phBsB3m.png', 'https://imgur.com/vzz5qgv.png'];
+			let zufallBild = Math.floor(Math.random() * bilder.length); // random Wert aus dem Array
+            let endbild = bilder[zufallBild];
+
+            botImg.src = endbild;
+		}
+        function testen() {
+
+            let myImgPath = myImg.src; 
+            let botImgPath = botImg.src;
+
+            if ((myImgPath === 'https://imgur.com/orQ3LJI.png' && botImgPath === 'https://imgur.com/vzz5qgv.png') || (myImgPath === 'https://imgur.com/phBsB3m.png' && botImgPath === 'https://imgur.com/orQ3LJI.png') || (myImgPath === 'https://imgur.com/vzz5qgv.png' && botImgPath === 'https://imgur.com/phBsB3m.png')) {  //habe ich gewonnen
+                myP++;
+                myPointsA.textContent = 'Punkte: ' + myP;
+                console.log('Super, ein Punkt für dich!');
+            } else if ((myImgPath === 'https://imgur.com/orQ3LJI.png' && botImgPath === 'https://imgur.com/phBsB3m.png') || (myImgPath === 'https://imgur.com/phBsB3m.png' && botImgPath === 'https://imgur.com/vzz5qgv.png') || (myImgPath === 'https://imgur.com/vzz5qgv.png' && botImgPath === 'https://imgur.com/orQ3LJI.png')) {  // habe ich verloren
+                botP++; 
+                botPointsA.textContent = 'AI-Punkte: ' + botP;
+                console.log('Schade, leider nicht gewonnen.');
+            } else if (myImgPath === botImgPath) {              //Gleichstand
+                console.log('Oha, beide gleich.');
+            }
+        }
+
+        document.addEventListener('keydown', function(event){
+            if (event.key === '1') {
+                neuesImg('schereImg');
+                bot();
+                testen();
+            } else if (event.key === '2') {
+                neuesImg('rockImg');
+                bot();
+                testen();
+            } else if (event.key === '3') {
+                neuesImg('paperImg');
+                bot();
+                testen();
+            } else if (event.key === 'x') {
+                console.log('x');
+                myP += 15;
+                myPointsA.textContent = 'Punkte: ' + myP;
+            }
+        });
+    </script>
+</body>
+</html>
